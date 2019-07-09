@@ -1,0 +1,26 @@
+{
+  "name": "MMSH_ToDoList",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dom.js",
+  "scripts": {
+    "test": "node test.js | tap-spec",
+    "cover": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GSG-G7/MMSH_ToDoList.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GSG-G7/MMSH_ToDoList/issues"
+  },
+  "homepage": "https://github.com/GSG-G7/MMSH_ToDoList#readme",
+  "devDependencies": {
+    "nyc": "^14.1.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0"
+  }
+}
