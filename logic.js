@@ -24,10 +24,10 @@ var todoFunctions = {
     },
     
     addTodo: function(todos, newTodo) {
-      var newArr = this.cloneArrayOfObjects(todos);
-      var newObject = {id: this.generateId(), description: newTodo , done: false};  
-      newArr.push(newObject);
-      return newArr;
+      // var newArr = this.cloneArrayOfObjects(todos);
+      // var newObject = {id: this.generateId(), description: newTodo , done: false};  
+      // newArr.push(newObject);
+      // return newArr;
       // should leave the input argument todos unchanged (you can use cloneArrayOfObjects)
       // returns a new array, it should contain todos with the newTodo added to the end.
       // add an id to the newTodo. You can use the generateId function to create an id.
