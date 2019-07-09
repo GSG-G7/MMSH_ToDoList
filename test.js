@@ -16,7 +16,7 @@ test("Testing the delete function", function(t) {
   t.deepEqual(actual, expected, "The new Array must not includes the id -2");
   t.end();
 });
-//console.log(logic);
+
 test("test add", function(t) {
   const actual1 = logic.addTodo(state, "mai");
   const expected1 = [
@@ -45,5 +45,37 @@ test("test add", function(t) {
     ],
     "State should not be changed"
   );
+  t.end();
+});
+
+test('mark todo function',function(t){
+  t.equal(logic.markTodo(state,-2)[1].done,false,"should be true");
+  t.end();
+});
+
+test('sort todo function',function(t){
+  t.equal(logic.sortTodos(state,(x,y)=>{
+    
+    return y.done-x.done;
+
+  })[0].done,true,"should false be above");
+  t.end();
+});
+
+test('sort todo function',function(t){
+  t.equal(logic.sortTodos(state,(x,y)=>{
+    
+    return y.id-x.id;
+
+  })[0].id,-1,"the higher should be above");
+  t.end();
+});
+
+test('sort todo function by descriptaion',function(t){
+  t.equal(logic.sortTodos(state,(x,y)=>{
+    
+    return x.description.localeCompare(y.description);
+
+  })[0].description,"first todo","the higher should be above");
   t.end();
 });
