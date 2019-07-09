@@ -5,7 +5,7 @@ var state = [
   { id: -2, description: 'second todo', done: false },
   { id: -1, description: 'third todo', done: false },
 ];
-//console.log(logic);
+
 test('test add', function(t) {
   const actual1 = logic.addTodo(state,'mai');
   const expected1 = [
