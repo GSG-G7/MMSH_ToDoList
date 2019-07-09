@@ -39,15 +39,28 @@ var todoFunctions = {
       // in the new todo array, all elements will remain unchanged except the one with id: idToMark
       // this element will have its done value toggled
       // hint: array.map
+      let clonedArray = this.cloneArrayOfObjects(todos);
+      clonedArray.forEach((todo)=>{
+          if(todo.id===idToMark){
+            if(todo.done==true)
+            todo.done=false;
+            else todo.done=true;
+          }
+      });
+      return clonedArray;
     },
     sortTodos: function(todos, sortFunction) {
       // stretch goal! Do this last
       // should leave the input arguement todos unchanged (you can use cloneArrayOfObjects)
       // sortFunction will have same signature as the sort function in array.sort
       // hint: array.slice, array.sort
+      let clonedArray = this.cloneArrayOfObjects(todos);
+      clonedArray.sort(sortFunction);
+      return clonedArray;
     },
   };
-  
+        // sortFunction will have same signature as the sort function in array.sort
+
   
   // Why is this if statement necessary?
   // The answer has something to do with needing to run code both in the browser and in Node.js
