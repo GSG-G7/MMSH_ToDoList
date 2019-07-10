@@ -41,6 +41,7 @@
       event.preventDefault();
       var description = event.target.querySelector('input').value;
       var newState = [...todoFunctions.addTodo(state,description)];
+      event.target.querySelector('input').value = "";
       update(newState);
     });
   }

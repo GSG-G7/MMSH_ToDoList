@@ -50,6 +50,7 @@ test("test add", function(t) {
 
 test('mark todo function',function(t){
   t.equal(logic.markTodo(state,-2)[1].done,false,"should be true");
+  t.equal(logic.markTodo(state,-3)[0].done,true,"should be false")
   t.end();
 });
 
