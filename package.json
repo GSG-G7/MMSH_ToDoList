@@ -1,5 +1,5 @@
 {
-  "name": "MMSH_ToDoList",
+  "name": "mmsh_todolist",
   "version": "1.0.0",
   "description": "",
   "main": "dom.js",
@@ -22,5 +22,6 @@
     "nyc": "^14.1.1",
     "tap-spec": "^5.0.0",
     "tape": "^4.11.0"
-  }
+  },
+  "dependencies": {}
 }
