@@ -12,8 +12,6 @@
         { id: -1, description: 'third todo', done: false },
     ]; // this is our initial todoList
 
-    if (localStorage.getItem('state') != null)
-        state = JSON.parse(localStorage.getItem('state'));
 
     let idSort = document.createElement('button');
     idSort.classList.add('id-sort');
@@ -113,6 +111,7 @@
         localStorage.setItem('state', JSON.stringify(state));
     };
 
+
     // you do not need to change this function
     var renderState = function(state) {
         var todoListNode = document.createElement('ul');
@@ -125,5 +124,10 @@
         container.replaceChild(todoListNode, container.firstChild);
     };
 
+
+    if (localStorage.getItem('state') != null) {
+
+        update(JSON.parse(localStorage.getItem('state')));
+    }
     if (container) renderState(state);
 })();

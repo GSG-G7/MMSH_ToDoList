@@ -8,6 +8,11 @@ var todoFunctions = {
     generateId: (function() {
         var idCounter = 0;
 
+        if (localStorage.getItem('state') != null) {
+            let storege = JSON.parse(localStorage.getItem('state'));
+            idCounter = storege[storege.length - 1].id;
+        }
+
         function incrementCounter() {
             return (idCounter += 1);
         }
