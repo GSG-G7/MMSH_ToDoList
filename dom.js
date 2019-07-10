@@ -30,30 +30,25 @@
 
     let newState;
     if (e.target.classList.contains("id-sort")) {
-      //console.log(e.target.textContent);
 
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return x.id - y.id;
       });
-      //console.log(newState);
 
       update(newState);
-      // console.log(newArr);
     } else if (e.target.classList.contains("description-sort")) {
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return x.description.localeCompare(y.description);
       });
-      // console.log(state);
-      //console.log(newState);
+
 
       update(newState);
-      //console.log(state);
+
     } else if (e.target.classList.contains("done-sort")) {
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return y.done - x.done;
       });
       update(newState);
-      console.log(newState);
     }
   });
   addTodoForm.appendChild(div);
@@ -61,12 +56,11 @@
   let clearAllButton = document.createElement("button");
   clearAllButton.textContent = "Clear All";
   clearAllButton.addEventListener("click", function(event) {
+    event.preventDefault();
     let newState = todoFunctions.clearAll(state);
-    console.log(newState);
     update(newState);
-    console.log(state);
   });
-  container.appendChild(clearAllButton);
+  addTodoForm.appendChild(clearAllButton);
 
   // This function takes a todo, it returns the DOM node representing that todo
   var createTodoNode = function(todo) {
@@ -112,10 +106,14 @@
     // add classes for css
     span.classList.add("todo-container-span");
     todoNode.classList.add("todo-container-item");
+    div.classList.add("button-container");
+    clearAllButton.classList.add("todo-container-clear");
+    idSort.classList.add("item-idSort");
+    descriptionSort.classList.add("item-descriptionSort");
+    doneSort.classList.add("item-doneSort");
     
     return todoNode;
   };
-
   // bind create todo form
 
   addTodoForm.appendChild(div);
@@ -151,6 +149,8 @@
 
     // you may want to add a class for css
     container.replaceChild(todoListNode, container.firstChild);
+  document.querySelector("ul").classList.add("todo-container-list")
+
   };
 
   if (container) renderState(state);

@@ -4,6 +4,12 @@ body{
     background-size: cover;
     text-align: center;
 }
+.heading{
+    font-family: 'Marck Script', cursive;
+    font-size: 50px;
+    margin: 50px;
+    text-transform: capitalize;
+}
 input[type=text]{
     border: none;
     border-radius: 15px;
@@ -15,7 +21,7 @@ input[type=text]{
     opacity: 0.7;
     font-size: 26px;
 }
-input[type=submit]{
+input[type=submit],.todo-container-clear,.item-idSort,.item-descriptionSort,.item-doneSort{
     background-color: #a7405f;
     border: none;
     color: white;
@@ -27,9 +33,21 @@ input[type=submit]{
     margin: 15px;
     font-weight: bold;
 }
+.todo-container-list{
+    display: flex;
+    justify-content: space-around;
+}
 .todo-container-item {
     list-style-type: none;
-    
+    background-color: #57333e;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: -5px 5px lightslategrey;
+    width: 28%;
+    max-height: 200px;
+    position: relative;
+    font-weight: bold;
 }
 .todo-container-span{
     width: 80%;
