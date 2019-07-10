@@ -8,6 +8,11 @@ var todoFunctions = {
   generateId: (function() {
     var idCounter = 0;
 
+    if (localStorage.getItem("state") != null) {
+      let storege = JSON.parse(localStorage.getItem("state"));
+      idCounter = storege[storege.length - 1].id;
+    }
+
     function incrementCounter() {
       return (idCounter += 1);
     }
@@ -44,11 +49,6 @@ var todoFunctions = {
     let newArr = this.cloneArrayOfObjects(todos);
     newArr = newArr.filter(e => e.id != idToDelete);
     return newArr;
-
-    // should leave the input argument todos unchanged (you can use cloneArrayOfObjects)
-    // returns a new array, it should contain todos with the newTodo added to the end.
-    // add an id to the newTodo. You can use the generateId function to create an id.
-    // hint: array.concat
   },
   markTodo: function(todos, idToMark) {
     // should leave the input argument todos unchanged (you can use cloneArrayOfObjects)
@@ -71,8 +71,11 @@ var todoFunctions = {
     // hint: array.slice, array.sort
     let clonedArray = this.cloneArrayOfObjects(todos);
     clonedArray.sort(sortFunction);
+    console.log(clonedArray);
+
     return clonedArray;
   },
+
   editTodo: function(todos, toDoId, newTodo) {
     let newArr = this.cloneArrayOfObjects(todos);
     newArr = newArr.map(function(item) {

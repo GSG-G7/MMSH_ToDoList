@@ -26,26 +26,38 @@
   div.appendChild(idSort);
   div.appendChild(doneSort);
   div.addEventListener("click", e => {
+    e.preventDefault();
+
+    let newState;
     if (e.target.classList.contains("id-sort")) {
-      let newArr = todoFunctions.sortTodos(state, (x, y) => {
-        y.id - x.id;
+      //console.log(e.target.textContent);
+
+      newState = todoFunctions.sortTodos(state, (x, y) => {
+        return x.id - y.id;
       });
-      update(newArr);
+      //console.log(newState);
+
+      update(newState);
+      // console.log(newArr);
     } else if (e.target.classList.contains("description-sort")) {
-      let newArr = todoFunctions.sortTodos(state, (x, y) => {
-        y.description - x.description;
+      newState = todoFunctions.sortTodos(state, (x, y) => {
+        return x.description.localeCompare(y.description);
       });
-      update(newArr);
+      // console.log(state);
+      //console.log(newState);
+
+      update(newState);
+      //console.log(state);
     } else if (e.target.classList.contains("done-sort")) {
-      let newArr = todoFunctions.sortTodos(state, (x, y) => {
-        y.done - x.done;
+      newState = todoFunctions.sortTodos(state, (x, y) => {
+        return y.done - x.done;
       });
-      update(newArr);
+      update(newState);
+      console.log(newState);
     }
   });
   addTodoForm.appendChild(div);
 
-  // Add clearAll Button
   let clearAllButton = document.createElement("button");
   clearAllButton.textContent = "Clear All";
   clearAllButton.addEventListener("click", function(event) {
@@ -62,6 +74,9 @@
     // you will need to use addEventListener
 
     // add span holding description
+    let span = document.createElement("span");
+    span.textContent = todo.description;
+    todoNode.appendChild(span);
 
     // this adds the delete button
     var deleteButtonNode = document.createElement("button");
@@ -85,8 +100,12 @@
     let EditButtonNode = document.createElement("button");
     EditButtonNode.textContent = "Edit";
     EditButtonNode.addEventListener("click", function(event) {
-      let newState = todoFunctions.editTodo(state, todo.id, newText);
-      update(newState);
+      if (span.contentEditable == true) {
+        span.contentEditable = "false";
+        let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
+        update(newState);
+      }
+      span.contentEditable = "true";
     });
     todoNode.appendChild(EditButtonNode);
 
@@ -94,6 +113,14 @@
 
     return todoNode;
   };
+
+  // bind create todo form
+
+  addTodoForm.appendChild(div);
+
+  // Add clearAll Button
+
+  // This function takes a todo, it returns the DOM node representing that todo
 
   // bind create todo form
   if (addTodoForm) {
