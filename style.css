@@ -27,12 +27,13 @@ input[type=submit]{
     margin: 15px;
     font-weight: bold;
 }
-.todo li {
+.todo-container-item {
     list-style-type: none;
+    
 }
-.todo span{
+.todo-container-span{
     width: 80%;
 }
-.todo button{
+.todo-container button{
     margin-left: 10px;
 }
