@@ -129,6 +129,14 @@
     addTodoForm.addEventListener("submit", function(event) {
       event.preventDefault();
       var description = event.target.querySelector("input").value;
+      if(description.trim()=="")
+      return ;
+      if(!/^[a-zA-Z0-9]|\s+$/.test(description))
+      return ;
+
+
+
+
       var newState = [...todoFunctions.addTodo(state, description)];
       update(newState);
       event.target.querySelector("input").value = "";
@@ -139,6 +147,8 @@
   var update = function(newState) {
     state = newState;
     renderState(state);
+    localStorage.setItem('state',JSON.stringify(state));
+    console.log(state);
   };
 
   // you do not need to change this function
@@ -154,4 +164,22 @@
   };
 
   if (container) renderState(state);
+  
+  if(localStorage.getItem('state')!=null){
+      const storage = JSON.parse(localStorage.getItem('state'));
+      update(storage);
+
+      let maxid=0;
+      storage.forEach(function(todo){
+          if(todo.id>maxid)
+          maxid=todo.id;
+      });
+
+        while(maxid>0){
+            todoFunctions.generateId();
+            maxid--;
+        }      
+
+    //   console.log(state);
+  }
 })();
