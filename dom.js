@@ -12,6 +12,9 @@
         { id: -1, description: 'third todo', done: false },
     ]; // this is our initial todoList
 
+    if (localStorage.getItem('state') != null)
+        state = JSON.parse(localStorage.getItem('state'));
+
     let idSort = document.createElement('button');
     idSort.classList.add('id-sort');
     idSort.textContent = "sort By ID";
@@ -26,23 +29,35 @@
     div.appendChild(idSort);
     div.appendChild(doneSort);
     div.addEventListener('click', (e) => {
-        if (e.target.classList.contains('id-sort')) {
-            let newArr = todoFunctions.sortTodos(state, (x, y) => {
-                y.id - x.id;
-            })
-            update(newArr);
-        } else if (e.target.classList.contains('description-sort')) {
-            let newArr = todoFunctions.sortTodos(state, (x, y) => {
-                y.description - x.description;
-            })
-            update(newArr);
-        } else if (e.target.classList.contains('done-sort')) {
-            let newArr = todoFunctions.sortTodos(state, (x, y) => {
-                y.done - x.done;
-            })
-            update(newArr);
-        }
+        e.preventDefault();
 
+        let newState;
+        if (e.target.classList.contains('id-sort')) {
+            //console.log(e.target.textContent);
+
+            newState = todoFunctions.sortTodos(state, (x, y) => {
+                return x.id - y.id;
+            });
+            //console.log(newState);
+
+            update(newState);
+            // console.log(newArr);
+        } else if (e.target.classList.contains('description-sort')) {
+            newState = todoFunctions.sortTodos(state, (x, y) => {
+                return x.description.localeCompare(y.description);
+            });
+            // console.log(state);
+            //console.log(newState);
+
+            update(newState);
+            //console.log(state);
+        } else if (e.target.classList.contains('done-sort')) {
+            newState = todoFunctions.sortTodos(state, (x, y) => {
+                return y.done - x.done;
+            });
+            update(newState);
+            console.log(newState)
+        }
     })
     addTodoForm.appendChild(div);
 
@@ -52,6 +67,10 @@
         // you will need to use addEventListener
 
         // add span holding description
+        let span = document.createElement('span');
+        span.textContent = todo.description;
+        todoNode.appendChild(span);
+
 
         // this adds the delete button
         var deleteButtonNode = document.createElement('button');
@@ -83,6 +102,7 @@
             var description = event.target.querySelector('input').value;
             var newState = [...todoFunctions.addTodo(state, description)];
             update(newState);
+            console.log(state);
         });
     }
 
@@ -90,6 +110,7 @@
     var update = function(newState) {
         state = newState;
         renderState(state);
+        localStorage.setItem('state', JSON.stringify(state));
     };
 
     // you do not need to change this function
