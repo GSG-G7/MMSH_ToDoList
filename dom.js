@@ -110,7 +110,9 @@
     todoNode.appendChild(EditButtonNode);
 
     // add classes for css
-
+    span.classList.add("todo-container-span");
+    todoNode.classList.add("todo-container-item");
+    
     return todoNode;
   };
 
