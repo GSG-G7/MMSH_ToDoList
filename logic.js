@@ -7,11 +7,9 @@ var todoFunctions = {
   // You do not need to understand the implementation of this function.
   generateId: (function() {
     var idCounter = 0;
-
     function incrementCounter() {
       return (idCounter += 1);
     }
-
     return incrementCounter;
   })(),
 
@@ -22,7 +20,6 @@ var todoFunctions = {
       return JSON.parse(JSON.stringify(todo));
     });
   },
-
   addTodo: function(todos, newTodo) {
     var newArr = this.cloneArrayOfObjects(todos);
     var newObject = {
@@ -66,8 +63,6 @@ var todoFunctions = {
     // hint: array.slice, array.sort
     let clonedArray = this.cloneArrayOfObjects(todos);
     clonedArray.sort(sortFunction);
-    console.log(clonedArray);
-
     return clonedArray;
   },
 
