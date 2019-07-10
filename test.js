@@ -8,9 +8,27 @@ var state = [
 ];
 
 test("Testing the delete function", function(t) {
+  let actual = logic.deleteTodo(state, -1);
+  let expected = [
+    { id: -3, description: "first todo", done: false },
+    { id: -2, description: "second todo", done: true }
+  ];
+  t.deepEqual(actual, expected, "The new Array must not includes the id -2");
+  t.end();
+});
+test("Testing the delete function", function(t) {
   let actual = logic.deleteTodo(state, -2);
   let expected = [
     { id: -3, description: "first todo", done: false },
+    { id: -1, description: "third todo", done: true }
+  ];
+  t.deepEqual(actual, expected, "The new Array must not includes the id -2");
+  t.end();
+});
+test("Testing the delete function", function(t) {
+  let actual = logic.deleteTodo(state, -3);
+  let expected = [
+    { id: -2, description: "second todo", done: true },
     { id: -1, description: "third todo", done: true }
   ];
   t.deepEqual(actual, expected, "The new Array must not includes the id -2");
