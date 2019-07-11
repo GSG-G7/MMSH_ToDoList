@@ -96,23 +96,22 @@
     });
     todoNode.appendChild(markBtn);
 
-    //add edit button
+    span.addEventListener("click", function(event) {
+      span.contentEditable = "true";
+      const newText = event.target.textContent;
+    });
     let EditButtonNode = document.createElement("button");
     EditButtonNode.textContent = "Edit";
     EditButtonNode.addEventListener("click", function(event) {
-      if (span.contentEditable == true) {
-        span.contentEditable = "false";
-        let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
-        update(newState);
-      }
-      span.contentEditable = "true";
+      let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
+      update(newState);
     });
     todoNode.appendChild(EditButtonNode);
 
     // add classes for css
     span.classList.add("todo-container-span");
     todoNode.classList.add("todo-container-item");
-    
+
     return todoNode;
   };
 
@@ -129,16 +128,13 @@
     addTodoForm.addEventListener("submit", function(event) {
       event.preventDefault();
       var description = event.target.querySelector("input").value;
-      if(description.trim()=="")
-      return ;
-      if(!/^[a-zA-Z0-9]|\s+$/.test(description))
-      return ;
-
-
-
+      if (description.trim() == "") return;
+      if (!/^[a-zA-Z0-9]|\s+$/.test(description)) return;
 
       var newState = [...todoFunctions.addTodo(state, description)];
+      console.log(newState);
       update(newState);
+
       event.target.querySelector("input").value = "";
     });
   }
@@ -147,7 +143,7 @@
   var update = function(newState) {
     state = newState;
     renderState(state);
-    localStorage.setItem('state',JSON.stringify(state));
+    localStorage.setItem("state", JSON.stringify(state));
     console.log(state);
   };
 
@@ -164,21 +160,20 @@
   };
 
   if (container) renderState(state);
-  
-  if(localStorage.getItem('state')!=null){
-      const storage = JSON.parse(localStorage.getItem('state'));
-      update(storage);
 
-      let maxid=0;
-      storage.forEach(function(todo){
-          if(todo.id>maxid)
-          maxid=todo.id;
-      });
+  if (localStorage.getItem("state") != null) {
+    const storage = JSON.parse(localStorage.getItem("state"));
+    update(storage);
 
-        while(maxid>0){
-            todoFunctions.generateId();
-            maxid--;
-        }      
+    let maxid = 0;
+    storage.forEach(function(todo) {
+      if (todo.id > maxid) maxid = todo.id;
+    });
+
+    while (maxid > 0) {
+      todoFunctions.generateId();
+      maxid--;
+    }
 
     //   console.log(state);
   }

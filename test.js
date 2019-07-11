@@ -13,7 +13,7 @@ test("Testing the delete function", function(t) {
     { id: -3, description: "first todo", done: false },
     { id: -2, description: "second todo", done: true }
   ];
-  t.deepEqual(actual, expected, "The new Array must not includes the id -2");
+  t.deepEqual(actual, expected, "The new Array must not includes the id -1");
   t.end();
 });
 test("Testing the delete function", function(t) {
@@ -31,7 +31,7 @@ test("Testing the delete function", function(t) {
     { id: -2, description: "second todo", done: true },
     { id: -1, description: "third todo", done: true }
   ];
-  t.deepEqual(actual, expected, "The new Array must not includes the id -2");
+  t.deepEqual(actual, expected, "The new Array must not includes the id -3");
   t.end();
 });
 
@@ -66,9 +66,9 @@ test("test add", function(t) {
   t.end();
 });
 
-test('mark todo function',function(t){
-  t.equal(logic.markTodo(state,-2)[1].done,false,"should be true");
-  t.equal(logic.markTodo(state,-3)[0].done,true,"should be false")
+test("mark todo function", function(t) {
+  t.equal(logic.markTodo(state, -2)[1].done, false, "should be true");
+  t.equal(logic.markTodo(state, -3)[0].done, true, "should be false");
   t.end();
 });
 
