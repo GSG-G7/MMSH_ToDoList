@@ -30,43 +30,36 @@
 
     let newState;
     if (e.target.classList.contains("id-sort")) {
-      //console.log(e.target.textContent);
-
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return x.id - y.id;
       });
-      //console.log(newState);
 
       update(newState);
-      // console.log(newArr);
     } else if (e.target.classList.contains("description-sort")) {
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return x.description.localeCompare(y.description);
       });
-      // console.log(state);
-      //console.log(newState);
 
       update(newState);
-      //console.log(state);
     } else if (e.target.classList.contains("done-sort")) {
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return y.done - x.done;
+        clearAllButton.classList.add("todo-container-clear");
       });
       update(newState);
       console.log(newState);
     }
   });
-  addTodoForm.appendChild(div);
 
   let clearAllButton = document.createElement("button");
   clearAllButton.textContent = "Clear All";
   clearAllButton.addEventListener("click", function(event) {
+    event.preventDefault;
     let newState = todoFunctions.clearAll(state);
-    console.log(newState);
     update(newState);
-    console.log(state);
   });
-  container.appendChild(clearAllButton);
+  div.appendChild(clearAllButton);
+  addTodoForm.appendChild(div);
 
   // This function takes a todo, it returns the DOM node representing that todo
   var createTodoNode = function(todo) {
@@ -80,7 +73,8 @@
 
     // this adds the delete button
     var deleteButtonNode = document.createElement("button");
-    deleteButtonNode.textContent = "Delete";
+    deleteButtonNode.classList.add("fas", "fa-trash-alt");
+    deleteButtonNode.setAttribute("aria-label", "delete");
     deleteButtonNode.addEventListener("click", function(event) {
       var newState = todoFunctions.deleteTodo(state, todo.id);
       update(newState);
@@ -89,8 +83,13 @@
 
     // add markTodo button
     let markBtn = document.createElement("button");
-    markBtn.textContent = "Done";
+    markBtn.classList.add("fa", "fa-check");
+    markBtn.setAttribute("aria-label", "mark");
     markBtn.addEventListener("click", () => {
+      e.preventDefault();
+
+      markBtn.style.backgroundColor = "green !important";
+
       let newState = todoFunctions.markTodo(state, todo.id);
       update(newState);
     });
@@ -101,7 +100,8 @@
       const newText = event.target.textContent;
     });
     let EditButtonNode = document.createElement("button");
-    EditButtonNode.textContent = "Edit";
+    EditButtonNode.classList.add("fas", "fa-edit");
+    EditButtonNode.setAttribute("aria-label", "edit");
     EditButtonNode.addEventListener("click", function(event) {
       let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
       update(newState);
@@ -111,6 +111,14 @@
     // add classes for css
     span.classList.add("todo-container-span");
     todoNode.classList.add("todo-container-item");
+    div.classList.add("button-container");
+    clearAllButton.classList.add("todo-container-clear");
+    idSort.classList.add("item-idSort");
+    descriptionSort.classList.add("item-descriptionSort");
+    doneSort.classList.add("item-doneSort");
+    markBtn.classList.add("item-mark");
+    EditButtonNode.classList.add("item-edit");
+    deleteButtonNode.classList.add("item-delete");
 
     return todoNode;
   };
@@ -127,9 +135,18 @@
   if (addTodoForm) {
     addTodoForm.addEventListener("submit", function(event) {
       event.preventDefault();
-      var description = event.target.querySelector("input").value;
-      if (description.trim() == "") return;
-      if (!/^[a-zA-Z0-9]|\s+$/.test(description)) return;
+      let description = event.target.querySelector("input").value.trim();
+      console.log(description);
+      if (description == "") {
+        event.target.querySelector("input").value = "";
+        alert("Invalid Input");
+        return;
+      }
+      if (!/^[a-zA-Z0-9]/.test(description)) {
+        event.target.querySelector("input").value = "";
+        alert("Invalid Input");
+        return;
+      }
 
       var newState = [...todoFunctions.addTodo(state, description)];
       console.log(newState);
@@ -176,5 +193,6 @@
     }
 
     //   console.log(state);
+    console.log(document.querySelector("ul"));
   }
 })();

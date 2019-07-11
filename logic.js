@@ -81,7 +81,9 @@ var todoFunctions = {
     return newArr;
   },
   clearAll: function(todos) {
-    return [];
+    let newArr = this.cloneArrayOfObjects(todos);
+    newArr = [];
+    return newArr;
   }
 };
 // sortFunction will have same signature as the sort function in array.sort
