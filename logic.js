@@ -27,7 +27,7 @@ var todoFunctions = {
       description: newTodo,
       done: false
     };
-    newArr.push(newObject);
+    newArr.unshift(newObject);
     return newArr;
     // should leave the input argument todos unchanged (you can use cloneArrayOfObjects)
     // returns a new array, it should contain todos with the newTodo added to the end.
