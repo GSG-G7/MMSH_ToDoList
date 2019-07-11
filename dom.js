@@ -30,7 +30,6 @@
 
     let newState;
     if (e.target.classList.contains("id-sort")) {
-
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return x.id - y.id;
       });
@@ -45,22 +44,22 @@
     } else if (e.target.classList.contains("done-sort")) {
       newState = todoFunctions.sortTodos(state, (x, y) => {
         return y.done - x.done;
+        clearAllButton.classList.add("todo-container-clear");
       });
       update(newState);
       console.log(newState);
     }
   });
-  addTodoForm.appendChild(div);
 
   let clearAllButton = document.createElement("button");
   clearAllButton.textContent = "Clear All";
   clearAllButton.addEventListener("click", function(event) {
+    event.preventDefault;
     let newState = todoFunctions.clearAll(state);
-    console.log(newState);
     update(newState);
-    console.log(state);
   });
-  addTodoForm.appendChild(clearAllButton);
+  div.appendChild(clearAllButton);
+  addTodoForm.appendChild(div);
 
   // This function takes a todo, it returns the DOM node representing that todo
   var createTodoNode = function(todo) {
@@ -74,8 +73,8 @@
 
     // this adds the delete button
     var deleteButtonNode = document.createElement("button");
-    deleteButtonNode.classList.add("fas","fa-trash-alt");
-    deleteButtonNode.setAttribute("aria-label","delete");
+    deleteButtonNode.classList.add("fas", "fa-trash-alt");
+    deleteButtonNode.setAttribute("aria-label", "delete");
     deleteButtonNode.addEventListener("click", function(event) {
       var newState = todoFunctions.deleteTodo(state, todo.id);
       update(newState);
@@ -84,43 +83,42 @@
 
     // add markTodo button
     let markBtn = document.createElement("button");
-    markBtn.classList.add("fa","fa-check");
-    markBtn.setAttribute("aria-label","mark");
+    markBtn.classList.add("fa", "fa-check");
+    markBtn.setAttribute("aria-label", "mark");
     markBtn.addEventListener("click", () => {
-        e.preventDefault();
-      
-            markBtn.style.backgroundColor="green !important";
-      
-    let newState = todoFunctions.markTodo(state, todo.id);
+      e.preventDefault();
+
+      markBtn.style.backgroundColor = "green !important";
+
+      let newState = todoFunctions.markTodo(state, todo.id);
       update(newState);
     });
     todoNode.appendChild(markBtn);
 
-    //add edit button
-    let EditButtonNode = document.createElement("button");
-    EditButtonNode.classList.add("fas","fa-edit");
-    EditButtonNode.setAttribute("aria-label","edit");
-    EditButtonNode.addEventListener("click", function(event) {
-      if (span.contentEditable == true) {
-        span.contentEditable = "false";
-        let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
-        update(newState);
-      }
+    span.addEventListener("click", function(event) {
       span.contentEditable = "true";
+      const newText = event.target.textContent;
+    });
+    let EditButtonNode = document.createElement("button");
+    EditButtonNode.classList.add("fas", "fa-edit");
+    EditButtonNode.setAttribute("aria-label", "edit");
+    EditButtonNode.addEventListener("click", function(event) {
+      let newState = todoFunctions.editTodo(state, todo.id, span.textContent);
+      update(newState);
     });
     todoNode.appendChild(EditButtonNode);
 
     // add classes for css
     span.classList.add("todo-container-span");
-todoNode.classList.add("todo-container-item");
-div.classList.add("button-container");
-clearAllButton.classList.add("todo-container-clear");
-idSort.classList.add("item-idSort");
-descriptionSort.classList.add("item-descriptionSort");
-doneSort.classList.add("item-doneSort");
-markBtn.classList.add("item-mark");
-EditButtonNode.classList.add("item-edit");
-deleteButtonNode.classList.add("item-delete");
+    todoNode.classList.add("todo-container-item");
+    div.classList.add("button-container");
+    clearAllButton.classList.add("todo-container-clear");
+    idSort.classList.add("item-idSort");
+    descriptionSort.classList.add("item-descriptionSort");
+    doneSort.classList.add("item-doneSort");
+    markBtn.classList.add("item-mark");
+    EditButtonNode.classList.add("item-edit");
+    deleteButtonNode.classList.add("item-delete");
 
     return todoNode;
   };
@@ -139,21 +137,21 @@ deleteButtonNode.classList.add("item-delete");
       event.preventDefault();
       let description = event.target.querySelector("input").value.trim();
       console.log(description);
-      if(description==""){
-       event.target.querySelector("input").value="";
+      if (description == "") {
+        event.target.querySelector("input").value = "";
         alert("Invalid Input");
-        return ;
+        return;
       }
-      if(!/^[a-zA-Z0-9]/.test(description)){
-        event.target.querySelector("input").value="";
-      alert("Invalid Input");
-      return ;
+      if (!/^[a-zA-Z0-9]/.test(description)) {
+        event.target.querySelector("input").value = "";
+        alert("Invalid Input");
+        return;
       }
-
-
 
       var newState = [...todoFunctions.addTodo(state, description)];
+      console.log(newState);
       update(newState);
+
       event.target.querySelector("input").value = "";
     });
   }
@@ -162,7 +160,7 @@ deleteButtonNode.classList.add("item-delete");
   var update = function(newState) {
     state = newState;
     renderState(state);
-    localStorage.setItem('state',JSON.stringify(state));
+    localStorage.setItem("state", JSON.stringify(state));
     console.log(state);
   };
 
@@ -176,27 +174,25 @@ deleteButtonNode.classList.add("item-delete");
 
     // you may want to add a class for css
     container.replaceChild(todoListNode, container.firstChild);
-    
   };
 
   if (container) renderState(state);
-  
-  if(localStorage.getItem('state')!=null){
-      const storage = JSON.parse(localStorage.getItem('state'));
-      update(storage);
 
-      let maxid=0;
-      storage.forEach(function(todo){
-          if(todo.id>maxid)
-          maxid=todo.id;
-      });
+  if (localStorage.getItem("state") != null) {
+    const storage = JSON.parse(localStorage.getItem("state"));
+    update(storage);
 
-        while(maxid>0){
-            todoFunctions.generateId();
-            maxid--;
-        }      
+    let maxid = 0;
+    storage.forEach(function(todo) {
+      if (todo.id > maxid) maxid = todo.id;
+    });
+
+    while (maxid > 0) {
+      todoFunctions.generateId();
+      maxid--;
+    }
 
     //   console.log(state);
-    console.log(document.querySelector('ul'));
+    console.log(document.querySelector("ul"));
   }
 })();

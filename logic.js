@@ -10,6 +10,7 @@ var todoFunctions = {
     function incrementCounter() {
       return (idCounter += 1);
     }
+
     return incrementCounter;
   })(),
 
@@ -20,6 +21,7 @@ var todoFunctions = {
       return JSON.parse(JSON.stringify(todo));
     });
   },
+
   addTodo: function(todos, newTodo) {
     var newArr = this.cloneArrayOfObjects(todos);
     var newObject = {
@@ -27,7 +29,7 @@ var todoFunctions = {
       description: newTodo,
       done: false
     };
-    newArr.unshift(newObject);
+    newArr.push(newObject);
     return newArr;
     // should leave the input argument todos unchanged (you can use cloneArrayOfObjects)
     // returns a new array, it should contain todos with the newTodo added to the end.
@@ -63,6 +65,8 @@ var todoFunctions = {
     // hint: array.slice, array.sort
     let clonedArray = this.cloneArrayOfObjects(todos);
     clonedArray.sort(sortFunction);
+    console.log(clonedArray);
+
     return clonedArray;
   },
 
@@ -88,6 +92,6 @@ var todoFunctions = {
 // The answer has something to do with needing to run code both in the browser and in Node.js
 // See this article for more details:
 // http://www.matteoagosti.com/blog/2013/02/24/writing-javascript-modules-for-both-browser-and-node/
-if (typeof module !== 'undefined') {
+if (typeof module !== "undefined") {
   module.exports = todoFunctions;
 }
